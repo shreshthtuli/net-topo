@@ -1,0 +1,43 @@
+mininet> h1 ping -c 2 h2
+PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=4.34 ms
+64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=1.63 ms
+
+--- 10.0.0.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 1.634/2.991/4.348/1.357 ms
+mininet> h1 ping -c 2 h5
+PING 10.0.0.5 (10.0.0.5) 56(84) bytes of data.
+64 bytes from 10.0.0.5: icmp_seq=1 ttl=64 time=4.47 ms
+64 bytes from 10.0.0.5: icmp_seq=2 ttl=64 time=1.74 ms
+
+--- 10.0.0.5 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 1.743/3.107/4.472/1.365 ms
+mininet> h1 ping -c 2 h10
+PING 10.0.0.10 (10.0.0.10) 56(84) bytes of data.
+64 bytes from 10.0.0.10: icmp_seq=1 ttl=64 time=4.00 ms
+64 bytes from 10.0.0.10: icmp_seq=2 ttl=64 time=1.06 ms
+
+--- 10.0.0.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 1.066/2.535/4.005/1.470 ms
+mininet> iperf h1 h2
+*** Iperf: testing TCP bandwidth between h1 and h2
+*** Results: ['14.5 Gbits/sec', '14.5 Gbits/sec']
+mininet> iperf h1 h5
+*** Iperf: testing TCP bandwidth between h1 and h5
+*** Results: ['14.7 Gbits/sec', '14.7 Gbits/sec']
+mininet> iperf h1 h10
+*** Iperf: testing TCP bandwidth between h1 and h10
+*** Results: ['15.6 Gbits/sec', '15.6 Gbits/sec']
+mininet> h1 traceroute h2
+traceroute to 10.0.0.2 (10.0.0.2), 30 hops max, 60 byte packets
+ 1  10.0.0.2 (10.0.0.2)  4.273 ms * *
+mininet> h1 traceroute h5
+traceroute to 10.0.0.5 (10.0.0.5), 30 hops max, 60 byte packets
+ 1  * * 10.0.0.5 (10.0.0.5)  4.480 ms
+mininet> h1 traceroute h10
+traceroute to 10.0.0.10 (10.0.0.10), 30 hops max, 60 byte packets
+ 1  * * *
+ 2  * 10.0.0.10 (10.0.0.10)  4.317 ms  4.310 ms

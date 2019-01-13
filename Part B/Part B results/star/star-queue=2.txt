@@ -1,0 +1,55 @@
+mininet> pingall
+*** Ping: testing ping reachability
+h1 -> h2 h3 h4 h5 h6 h7 h8 h9 h10
+h2 -> h1 h3 h4 h5 h6 h7 h8 h9 h10
+h3 -> h1 h2 h4 h5 h6 h7 h8 h9 h10
+h4 -> h1 h2 h3 h5 h6 h7 h8 h9 h10
+h5 -> h1 h2 h3 h4 h6 h7 h8 h9 h10
+h6 -> h1 h2 h3 h4 h5 h7 h8 h9 h10
+h7 -> h1 h2 h3 h4 h5 h6 h8 h9 h10
+h8 -> h1 h2 h3 h4 h5 h6 h7 h9 h10
+h9 -> h1 h2 h3 h4 h5 h6 h7 h8 h10
+h10 -> h1 h2 h3 h4 h5 h6 h7 h8 h9
+*** Results: 0% dropped (90/90 received)
+mininet> h1 ping -c 2 h2
+PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=1.11 ms
+64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=0.481 ms
+
+--- 10.0.0.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.481/0.795/1.110/0.315 ms
+mininet> h1 ping -c 2 h5
+PING 10.0.0.5 (10.0.0.5) 56(84) bytes of data.
+64 bytes from 10.0.0.5: icmp_seq=1 ttl=64 time=1.32 ms
+64 bytes from 10.0.0.5: icmp_seq=2 ttl=64 time=0.418 ms
+
+--- 10.0.0.5 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1000ms
+rtt min/avg/max/mdev = 0.418/0.872/1.327/0.455 ms
+mininet> h1 ping -c 2 h10
+PING 10.0.0.10 (10.0.0.10) 56(84) bytes of data.
+64 bytes from 10.0.0.10: icmp_seq=1 ttl=64 time=1.13 ms
+64 bytes from 10.0.0.10: icmp_seq=2 ttl=64 time=0.369 ms
+
+--- 10.0.0.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.369/0.752/1.135/0.383 ms
+mininet> iperf h1 h2
+*** Iperf: testing TCP bandwidth between h1 and h2
+*** Results: ['19.2 Gbits/sec', '19.2 Gbits/sec']
+mininet> iperf h1 h5
+*** Iperf: testing TCP bandwidth between h1 and h5
+*** Results: ['18.8 Gbits/sec', '18.8 Gbits/sec']
+mininet> iperf h1 h10
+*** Iperf: testing TCP bandwidth between h1 and h10
+*** Results: ['21.5 Gbits/sec', '21.6 Gbits/sec']
+mininet> h1 traceroute h2
+traceroute to 10.0.0.2 (10.0.0.2), 30 hops max, 60 byte packets
+ 1  10.0.0.2 (10.0.0.2)  1.096 ms  0.084 ms  0.009 ms
+mininet> h1 traceroute h5
+traceroute to 10.0.0.5 (10.0.0.5), 30 hops max, 60 byte packets
+ 1  10.0.0.5 (10.0.0.5)  0.988 ms  0.070 ms  0.037 ms
+mininet> h1 traceroute h10
+traceroute to 10.0.0.10 (10.0.0.10), 30 hops max, 60 byte packets
+ 1  10.0.0.10 (10.0.0.10)  1.507 ms  0.133 ms  0.015 ms

@@ -1,0 +1,164 @@
+mininet@mininet-vm:~/mininet/custom$ sudo mn --custom topos.py --topo linear
+*** Creating network
+*** Adding controller
+*** Adding hosts:
+h1 h2 h3 h4 h5 h6 h7 h8 h9 h10
+*** Adding switches:
+s1 s2 s3 s4 s5 s6 s7 s8 s9 s10
+*** Adding links:
+(h1, s1) (h2, s2) (h3, s3) (h4, s4) (h5, s5) (h6, s6) (h7, s7) (h8, s8) (h9, s9) (h10, s10) (s1, s2) (s2, s3) (s3, s4) (s4, s5) (s5, s6) (s6, s7) (s7, s8) (s8, s9) (s9, s10)
+*** Configuring hosts
+h1 h2 h3 h4 h5 h6 h7 h8 h9 h10
+*** Starting controller
+c0
+*** Starting 10 switches
+s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 ...
+*** Starting CLI:
+mininet> net
+h1 h1-eth0:s1-eth1
+h2 h2-eth0:s2-eth1
+h3 h3-eth0:s3-eth1
+h4 h4-eth0:s4-eth1
+h5 h5-eth0:s5-eth1
+h6 h6-eth0:s6-eth1
+h7 h7-eth0:s7-eth1
+h8 h8-eth0:s8-eth1
+h9 h9-eth0:s9-eth1
+h10 h10-eth0:s10-eth1
+s1 lo:  s1-eth1:h1-eth0 s1-eth2:s2-eth2
+s2 lo:  s2-eth1:h2-eth0 s2-eth2:s1-eth2 s2-eth3:s3-eth2
+s3 lo:  s3-eth1:h3-eth0 s3-eth2:s2-eth3 s3-eth3:s4-eth2
+s4 lo:  s4-eth1:h4-eth0 s4-eth2:s3-eth3 s4-eth3:s5-eth2
+s5 lo:  s5-eth1:h5-eth0 s5-eth2:s4-eth3 s5-eth3:s6-eth2
+s6 lo:  s6-eth1:h6-eth0 s6-eth2:s5-eth3 s6-eth3:s7-eth2
+s7 lo:  s7-eth1:h7-eth0 s7-eth2:s6-eth3 s7-eth3:s8-eth2
+s8 lo:  s8-eth1:h8-eth0 s8-eth2:s7-eth3 s8-eth3:s9-eth2
+s9 lo:  s9-eth1:h9-eth0 s9-eth2:s8-eth3 s9-eth3:s10-eth2
+s10 lo:  s10-eth1:h10-eth0 s10-eth2:s9-eth3
+c0
+mininet> pingall
+*** Ping: testing ping reachability
+h1 -> h2 h3 h4 h5 h6 h7 h8 h9 h10
+h2 -> h1 h3 h4 h5 h6 h7 h8 h9 h10
+h3 -> h1 h2 h4 h5 h6 h7 h8 h9 h10
+h4 -> h1 h2 h3 h5 h6 h7 h8 h9 h10
+h5 -> h1 h2 h3 h4 h6 h7 h8 h9 h10
+h6 -> h1 h2 h3 h4 h5 h7 h8 h9 h10
+h7 -> h1 h2 h3 h4 h5 h6 h8 h9 h10
+h8 -> h1 h2 h3 h4 h5 h6 h7 h9 h10
+h9 -> h1 h2 h3 h4 h5 h6 h7 h8 h10
+h10 -> h1 h2 h3 h4 h5 h6 h7 h8 h9
+*** Results: 0% dropped (90/90 received)
+mininet> h1 ping -c 2 h2
+PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=0.546 ms
+64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=0.694 ms
+
+--- 10.0.0.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.546/0.620/0.694/0.074 ms
+mininet> h1 ping -c 2 h5
+PING 10.0.0.5 (10.0.0.5) 56(84) bytes of data.
+64 bytes from 10.0.0.5: icmp_seq=1 ttl=64 time=0.459 ms
+64 bytes from 10.0.0.5: icmp_seq=2 ttl=64 time=0.106 ms
+
+--- 10.0.0.5 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 0.106/0.282/0.459/0.177 ms
+mininet> h1 ping -c 2 h10
+PING 10.0.0.10 (10.0.0.10) 56(84) bytes of data.
+64 bytes from 10.0.0.10: icmp_seq=1 ttl=64 time=0.480 ms
+64 bytes from 10.0.0.10: icmp_seq=2 ttl=64 time=0.141 ms
+
+--- 10.0.0.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 0.141/0.310/0.480/0.170 ms
+mininet> iperf h1 h2
+*** Iperf: testing TCP bandwidth between h1 and h2
+.*** Results: ['17.8 Gbits/sec', '17.8 Gbits/sec']
+mininet> iperf h1 h5
+*** Iperf: testing TCP bandwidth between h1 and h5
+*** Results: ['17.6 Gbits/sec', '17.6 Gbits/sec']
+mininet> iperf h1 h10
+*** Iperf: testing TCP bandwidth between h1 and h10
+*** Results: ['15.9 Gbits/sec', '15.9 Gbits/sec']
+mininet> h1 ifconfig
+h1-eth0   Link encap:Ethernet  HWaddr 6e:3f:9c:41:46:85
+          inet addr:10.0.0.1  Bcast:10.255.255.255  Mask:255.0.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:130231 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:562811 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:8595642 (8.5 MB)  TX bytes:32085860502 (32.0 GB)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+mininet> h5 ifconfig
+h5-eth0   Link encap:Ethernet  HWaddr 0e:5c:af:e7:3c:b6
+          inet addr:10.0.0.5  Bcast:10.255.255.255  Mask:255.0.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:193207 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:44949 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:11014410438 (11.0 GB)  TX bytes:2966858 (2.9 MB)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+mininet> h10 ifconfig
+h10-eth0  Link encap:Ethernet  HWaddr 02:9c:8e:3a:76:d7
+          inet addr:10.0.0.10  Bcast:10.255.255.255  Mask:255.0.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:174724 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:40489 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:9929787056 (9.9 GB)  TX bytes:2673386 (2.6 MB)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+mininet> h1 route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+10.0.0.0        *               255.0.0.0       U     0      0        0 h1-eth0
+mininet> h5 route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+10.0.0.0        *               255.0.0.0       U     0      0        0 h5-eth0
+mininet> h10 route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+10.0.0.0        *               255.0.0.0       U     0      0        0 h10-eth0
+mininet> h1 traceroute h2
+traceroute to 10.0.0.2 (10.0.0.2), 30 hops max, 60 byte packets
+ 1  10.0.0.2 (10.0.0.2)  3.989 ms  17.512 ms *
+mininet> h1 traceroute h5
+traceroute to 10.0.0.5 (10.0.0.5), 30 hops max, 60 byte packets
+ 1  10.0.0.5 (10.0.0.5)  15.849 ms * *
+mininet> h1 traceroute h10
+traceroute to 10.0.0.10 (10.0.0.10), 30 hops max, 60 byte packets
+ 1  10.0.0.10 (10.0.0.10)  35.827 ms * *
+mininet> s1 nslookup www.google.com
+Server:         202.56.215.54
+Address:        202.56.215.54#53
+
+Non-authoritative answer:
+Name:   www.google.com
+Address: 172.217.163.196
+

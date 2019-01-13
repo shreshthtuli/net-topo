@@ -1,0 +1,54 @@
+mininet> pingall
+*** Ping: testing ping reachability
+h1 -> h2 h3 h4 X h6 h7 h8 X h10
+h2 -> h1 h3 h4 h5 h6 X h8 h9 X
+h3 -> h1 h2 h4 h5 h6 h7 h8 X h10
+h4 -> X h2 h3 h5 h6 h7 h8 X h10
+h5 -> h1 h2 X h4 h6 X X h9 h10
+h6 -> h1 h2 h3 h4 h5 h7 h8 h9 h10
+h7 -> h1 h2 X h4 h5 h6 h8 X h10
+h8 -> ^[[CX h2 h3 h4 X X h7 h9 h10
+h9 -> h1 X X h4 h5 h6 h7 h8 h10
+h10 -> X X h3 h4 h5 h6 h7 X h9
+*** Results: 22% dropped (70/90 received)
+mininet> h1 ping -c 2 h2
+PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=2.85 ms
+64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=4.35 ms
+
+--- 10.0.0.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 2.852/3.604/4.356/0.752 ms
+mininet> h1 ping -c 2 h5
+PING 10.0.0.5 (10.0.0.5) 56(84) bytes of data.
+64 bytes from 10.0.0.5: icmp_seq=1 ttl=64 time=7.73 ms
+64 bytes from 10.0.0.5: icmp_seq=2 ttl=64 time=10.5 ms
+
+--- 10.0.0.5 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 7.731/9.140/10.549/1.409 ms
+mininet> h1 ping -c 2 h10
+PING 10.0.0.10 (10.0.0.10) 56(84) bytes of data.
+64 bytes from 10.0.0.10: icmp_seq=1 ttl=64 time=18.6 ms
+64 bytes from 10.0.0.10: icmp_seq=2 ttl=64 time=2.26 ms
+
+--- 10.0.0.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 2.260/10.465/18.671/8.206 ms
+
+mininet> iperf h1 h2
+*** Iperf: testing TCP bandwidth between h1 and h2
+*** Results: ['54.6 Mbits/sec', '56.9 Mbits/sec']
+mininet> iperf h1 h5
+*** Iperf: testing TCP bandwidth between h1 and h5
+*** Results: ['1.79 Mbits/sec', '1.84 Mbits/sec']
+
+mininet> h1 traceroute h2
+traceroute to 10.0.0.2 (10.0.0.2), 30 hops max, 60 byte packets
+ 1  10.0.0.2 (10.0.0.2)  6.267 ms * *
+mininet> h1 traceroute h5
+traceroute to 10.0.0.5 (10.0.0.5), 30 hops max, 60 byte packets
+ 1  10.0.0.5 (10.0.0.5)  21.394 ms *  33.863 ms
+mininet> h1 traceroute h10
+traceroute to 10.0.0.10 (10.0.0.10), 30 hops max, 60 byte packets
+ 1  * 10.0.0.10 (10.0.0.10)  65.111 ms *

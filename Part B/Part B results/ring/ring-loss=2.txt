@@ -1,0 +1,55 @@
+mininet> pingall
+*** Ping: testing ping reachability
+h1 -> X X h4 X X X X h9 h10
+h2 -> h1 h3 h4 h5 h6 h7 h8 h9 X
+h3 -> h1 h2 h4 h5 h6 h7 h8 h9 h10
+h4 -> h1 h2 h3 X X h7 h8 X h10
+h5 -> h1 X h3 X h6 h7 h8 X h10
+h6 -> h1 h2 h3 X h5 X h8 X h10
+h7 -> h1 h2 h3 X h5 h6 h8 h9 h10
+h8 -> h1 h2 h3 h4 X h6 h7 h9 h10
+h9 -> h1 X h3 h4 h5 X h7 h8 h10
+h10 -> h1 h2 h3 h4 h5 h6 h7 h8 h9
+*** Results: 22% dropped (70/90 received)
+mininet>
+mininet> h1 ping -c 2 h2
+PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=3.36 ms
+
+--- 10.0.0.2 ping statistics ---
+2 packets transmitted, 1 received, 50% packet loss, time 1008ms
+rtt min/avg/max/mdev = 3.362/3.362/3.362/0.000 ms
+mininet> h1 ping -c 2 h5
+PING 10.0.0.5 (10.0.0.5) 56(84) bytes of data.
+64 bytes from 10.0.0.5: icmp_seq=2 ttl=64 time=5.10 ms
+
+--- 10.0.0.5 ping statistics ---
+2 packets transmitted, 1 received, 50% packet loss, time 1001ms
+rtt min/avg/max/mdev = 5.102/5.102/5.102/0.000 ms
+mininet> h1 ping -c 2 h10
+PING 10.0.0.10 (10.0.0.10) 56(84) bytes of data.
+64 bytes from 10.0.0.10: icmp_seq=1 ttl=64 time=2.67 ms
+64 bytes from 10.0.0.10: icmp_seq=2 ttl=64 time=0.942 ms
+
+--- 10.0.0.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.942/1.808/2.675/0.867 ms
+mininet>
+mininet> iperf h1 h2
+*** Iperf: testing TCP bandwidth between h1 and h2
+*** Results: ['41.8 Mbits/sec', '41.8 Mbits/sec']
+mininet> iperf h1 h5
+*** Iperf: testing TCP bandwidth between h1 and h5
+*** Results: ['3.02 Mbits/sec', '6.46 Mbits/sec']
+mininet> iperf h1 h10
+*** Iperf: testing TCP bandwidth between h1 and h10
+*** Results: ['34.7 Mbits/sec', '34.7 Mbits/sec']
+mininet> h1 traceroute h2
+traceroute to 10.0.0.2 (10.0.0.2), 30 hops max, 60 byte packets
+ 1  10.0.0.2 (10.0.0.2)  1.648 ms  0.391 ms *
+mininet> h1 traceroute h5
+traceroute to 10.0.0.5 (10.0.0.5), 30 hops max, 60 byte packets
+ 1  10.0.0.5 (10.0.0.5)  3.528 ms *  1.885 ms
+mininet> h1 traceroute h10
+traceroute to 10.0.0.10 (10.0.0.10), 30 hops max, 60 byte packets
+ 1  10.0.0.10 (10.0.0.10)  3.039 ms * *
